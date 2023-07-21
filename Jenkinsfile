@@ -14,7 +14,7 @@ pipeline {
            //     expression {
            //         params.executeTests
            //     }
-            /}
+            //}
             steps {
                 echo 'build the application'
                 ech "building version ${NEW_VERSION}"
