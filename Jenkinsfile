@@ -1,4 +1,6 @@
 /* Requires the Docker Pipeline plugin */
+def gv
+
 pipeline {
     agent any
     environment {
@@ -9,15 +11,19 @@ pipeline {
         booleanParam(name: 'executeTests', defaultValue: true, description:'')
     }
     stages {
-        stage('build') {
-           // when {
-           //     expression {
-           //         params.executeTests
-           //     }
-            //}
+        
+        stage('init') {          
             steps {
-                echo 'build the application'
-                echo "building version ${NEW_VERSION}"
+               jscript {
+                gv = load "script.groovy"
+               }
+            }
+        }
+        stage('build') {          
+            steps {
+                 script {
+                gv.buildApp()
+               }
             }
         }
         stage('test') {
@@ -27,13 +33,16 @@ pipeline {
                 }
             }
             steps {
-                echo 'testing the application'
+               script {
+                gv.testApp()
+               }
             }
         }
-        stage('deploy') {
-            steps {
-                echo 'deploying the application'
-                echo "deploying version ${params.VERSION}"
+        stage('deploy') {           
+             steps {
+               script {
+                gv.deployApp()
+               }           
             }
         }
     }
