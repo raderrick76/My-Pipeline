@@ -17,7 +17,7 @@ pipeline {
             //}
             steps {
                 echo 'build the application'
-                echo "building version ${NEW_VERSION}"
+              //  echo "building version ${NEW_VERSION}"
             }
         }
         stage('test') {
